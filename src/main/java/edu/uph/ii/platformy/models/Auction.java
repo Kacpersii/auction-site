@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "auctions")
 @NamedQuery(name = "Auction.findAllAuctionsUsingNamedQuery",

@@ -2,6 +2,7 @@ package edu.uph.ii.platformy.controllers;
 
 import edu.uph.ii.platformy.controllers.commands.AuctionFilter;
 import edu.uph.ii.platformy.models.Auction;
+import edu.uph.ii.platformy.models.Message;
 import edu.uph.ii.platformy.models.Opinion;
 import edu.uph.ii.platformy.models.User;
 import edu.uph.ii.platformy.services.AuctionService;
@@ -61,9 +62,13 @@ public class AuctionListController {
         Opinion opinion = new Opinion();
         opinion.setAuction(auction);
 
+        Message message = new Message();
+        message.setAuctionM(auction);
+
         model.addAttribute("auction", auction);
         model.addAttribute("opinion", opinion);
         model.addAttribute("opinions", opinions);
+        model.addAttribute("message", message);
 
         return "auctionDetails";
     }
@@ -84,7 +89,7 @@ public class AuctionListController {
     }
 
     @RequestMapping(value="/processOpinion.html", method = RequestMethod.POST)
-    public String processOpinionForm(@Valid @ModelAttribute("bid") Opinion opinion, Model model, BindingResult errors, Principal principal) {
+    public String processOpinionForm(@Valid @ModelAttribute("opinion") Opinion opinion, Model model, BindingResult errors, Principal principal) {
         if (errors.hasErrors()) {
             log.info("errors.hasErrors()");
 
@@ -100,10 +105,13 @@ public class AuctionListController {
 
         Opinion newOpinion = new Opinion();
         newOpinion.setAuction(auction);
+        Message newMessage = new Message();
+        newMessage.setAuctionM(auction);
 
         model.addAttribute("auction", auction);
         model.addAttribute("opinion", newOpinion);
         model.addAttribute("opinions", opinions);
+        model.addAttribute("message", newMessage);
 
         return "auctionDetails";
     }

@@ -7,7 +7,7 @@
 <body>
 <div th:replace="shared/header :: header('home')"/>
 
-<div id="main" class="container">
+<div  id="main" class="card-body">
     <H1 class="d-flex justify-content-center">Dane aukcji</H1>
     <img th:src="${auction.path}"/><br><br>
     <div>
@@ -28,7 +28,27 @@
     Tytuł: <b th:text="${auction.title}"></b><br/>
     Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy HH:mm:ss')}]]</b><br/>
     Opis: <b>[[${auction.description}]]</b><br/>
-    Numer telefonu: <b>[[${auction.phone}]]</b><br/>
+    Numer telefonu: <b>[[${auction.phone}]]</b><br/><br>
+
+    <form sec:authorize="hasRole('ROLE_USER')" th:method="POST" th:object="${message}" th:action="@{/processMessage.html}">
+
+        <span id="askMe">Zapytaj o szczegóły:</span>
+        <input id="auctionM" type="hidden" name="auctionM" th:value="*{auctionM.id}" class="form-control"/>
+
+        <div class="form-group col-sm-12">
+            <label for="description" class="bmd-label-floating">Wiadomość:</label>
+            <input id="content" type="text" name="content" th:value="*{content}"
+                   class="form-control" th:classappend="${#fields.hasErrors('content')}?'is-invalid'"
+                   required="true" autofocus="true"/>
+
+            <div class="error text-danger" th:if="${#fields.hasErrors('content')}">
+                <span th:each="err : ${#fields.errors('content')}" th:text="${err}"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-raised">Wyślij wiadomość</button>
+
+    </form>
 
     <br/>
 

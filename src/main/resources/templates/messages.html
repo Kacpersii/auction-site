@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+
+    <title>Strona domowa</title>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('auctionList')"/>
+
+<div id="main" class="card-body">
+
+    <div th:if="${receivedMessages.isEmpty() eq false}">
+
+        <h3>Otrzymane wiadomosci</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Data</th>
+                <th>Aukcja</th>
+                <th>Wiadomość</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${receivedMessages}">
+
+                <td>
+                    <span>[[${message.sender.username}]]</span>
+                </td>
+                <td>
+                    <span th:text="${#dates.format(message.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
+                </td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/auctionList.html(id=${message.auctionM.id})}"><span>[[${message.auctionM.title}]]</span></a>
+                </td>
+                <td>
+                    <span>[[${message.content}]]</span>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${sendedMessages.isEmpty() eq false}">
+
+        <h3>Wysłane wiadomosci</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Data</th>
+                <th>Aukcja</th>
+                <th>Wiadomość</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${sendedMessages}">
+
+                <td>
+                    <span>[[${message.receiver.username}]]</span>
+                </td>
+                <td>
+                    <span th:text="${#dates.format(message.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
+                </td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/auctionList.html(id=${message.auctionM.id})}"><span>[[${message.auctionM.title}]]</span></a>
+                </td>
+                <td>
+                    <span>[[${message.content}]]</span>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

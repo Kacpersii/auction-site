@@ -9,7 +9,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -22,7 +21,7 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auction_id", nullable = false)
-    private Auction auction;
+    private Auction auctionM;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id", nullable = false)
@@ -35,4 +34,16 @@ public class Message {
     @Column(name="date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
+    public Message() {
+        date = new Date();
+    }
+
+    public Message(String content, Auction auctionM, User sender, User receiver, Date date) {
+        this.content = content;
+        this.auctionM = auctionM;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.date = date;
+    }
 }

@@ -29,6 +29,8 @@ public class RepositoriesInitializer {
     @Autowired
     private OpinionRepository opinionRepository;
     @Autowired
+    private MessageRepository messageRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Bean
@@ -91,13 +93,16 @@ public class RepositoriesInitializer {
                 auctionRepository.saveAndFlush(auction7);
                 auctionRepository.saveAndFlush(auction8);
 
+                Message message1 = new Message("Wiadomość", auction1, user2, user1, new Date());
+                messageRepository.saveAndFlush(message1);
+
             }
 
             if (bidRepository.findAll().isEmpty()) {
-                Bid bid1 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1550, new Date(120, 02, 30, 11, 47, 06));
-                Bid bid2 = new Bid(userRepository.getOne((long) 2), auctionRepository.getOne((long) 1), 1600, new Date(120, 02, 30, 11, 51, 55));
-                Bid bid3 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1650, new Date(120, 02, 30, 12, 06, 01));
-                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 02, 30, 12, 11, 45));
+                Bid bid1 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1550, new Date(120, 02, 30, 10, 47, 06));
+                Bid bid2 = new Bid(userRepository.getOne((long) 2), auctionRepository.getOne((long) 1), 1600, new Date(120, 02, 30, 10, 51, 55));
+                Bid bid3 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1650, new Date(120, 02, 30, 11, 06, 01));
+                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 02, 30, 11, 11, 45));
 
                 bidRepository.saveAndFlush(bid1);
                 bidRepository.saveAndFlush(bid2);

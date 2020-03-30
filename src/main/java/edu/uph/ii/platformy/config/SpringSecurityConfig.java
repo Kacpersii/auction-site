@@ -77,7 +77,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/statics/**", "/webjars/**", "/", "/auctionList.html", "/registrationForm.html")
                 .permitAll()//do powyższych zasobów ma mieć każdy
-                .antMatchers( "/auctionForm.html", "/makeBid").hasAnyRole("ADMIN", "USER")
+                .antMatchers( "/auctionForm.html", "/makeBid.html", "/messages.html").hasAnyRole("ADMIN", "USER")
                 .anyRequest()
                 .permitAll();//pozostałe żądania mają być uwierzytelnione
 
