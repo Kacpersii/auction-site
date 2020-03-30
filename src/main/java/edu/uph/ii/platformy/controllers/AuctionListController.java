@@ -135,8 +135,10 @@ public class AuctionListController {
         boolean isloggedUserAuctions = id.isPresent() ? false : true;
         model.addAttribute("loggedUserAuctions", isloggedUserAuctions);
 
-        String whoseAuctions = id.isPresent() ? "Aukcje użytkownika " + auctions.getContent().get(0).getSeller().getUsername() : "Twoje aukcje";
-        model.addAttribute("whoseAuctions", whoseAuctions);
+        if(auctions.getContent().size() > 0) {
+            String whoseAuctions = id.isPresent() ? "Aukcje użytkownika " + auctions.getContent().get(0).getSeller().getUsername() : "Twoje aukcje";
+            model.addAttribute("whoseAuctions", whoseAuctions);
+        }
 
         return "userAuctionsList";
     }
