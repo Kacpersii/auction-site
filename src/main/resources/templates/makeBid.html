@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona domowa</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <h1>LICYTUJ</h1>
+    <img th:src="${auction.path}"/><br>
+    <div>
+        <span sec:authorize="isAnonymous()">Cena: <b th:text="${auction.price}"></b><br/></span>
+        <form sec:authorize="hasRole('ROLE_USER')" th:method="POST" th:object="${bid}" th:action="@{/processBid.html}">
+
+            <input id="auction" type="hidden" name="auction" th:value="*{auction.id}" class="form-control"/>
+
+            <div class="form-group col-sm-2">
+                <label for="amount" class="bmd-label-floating">Cena:</label>
+                <input id="amount" type="number" name="amount" th:value="*{amount}"
+                       class="form-control" th:classappend="${#fields.hasErrors('amount')}?'is-invalid'"
+                       required="true" autofocus="true"/>
+
+                <div class="error text-danger" th:if="${#fields.hasErrors('amount')}">
+                    <span th:each="err : ${#fields.errors('amount')}" th:text="${err}"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-raised">Licytuj</button>
+
+        </form>
+    </div>
+
+    Id: <b th:text="${auction.id}"></b><br/>
+    Tytuł: <b th:text="${auction.title}"></b><br/>
+    Kategoria: <b>[[${auction.category.name}]]</b><br/>
+    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy')}]]</b><br/><br>
+
+    <h2>Historia aukcji</h2>
+    <div th:if="${bidsList.isEmpty()}">
+        <span>Brak licytacji</span>
+    </div>
+
+    <div th:unless="${bidsList.isEmpty()}">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Wartość</th>
+                <th>Data licytacji</th>
+                <th sec:authorize="hasRole('ADMIN')">Opcje</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bid : ${bidsList}">
+
+                <td>
+                    <span>[[${bid.bidder.username}]]</span>
+                </td>
+                <td>
+                    <span>[[${bid.amount}]]</span>
+                </td>
+                <td>
+                    <span>[[${bid.addDate}]]</span>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="btn btn-danger" th:href="@{/bidList.html(did=${bid.id})}">Usuń</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

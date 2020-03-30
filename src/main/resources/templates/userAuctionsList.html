@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+
+    <title>Strona domowa</title>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('auctionList')"/>
+
+<div th:with="boundMin=${20000},boundMax=${40000}">
+
+    <div id="main" class="card-body">
+
+        <H1 class="d-flex justify-content-center">[[${whoseAuctions}]]</H1>
+
+        <div th:if="${auctionListPage.hasContent() eq false}">
+            <span>Brak aukcji w bazie</span>
+        </div>
+        <div th:if="${auctionListPage.hasContent() eq true}">
+
+
+
+            <span th:if="${searchCommand.isEmpty()}">
+                Baza zawiera [[${auctionListPage.totalElements}]] aukcji
+            </span>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Opis</th>
+                    <th>Kategoria</th>
+                    <th>Data zakończenia</th>
+                    <th>Cena</th>
+                    <th th:if="${loggedUserAuctions == true}">Ilość ofert</th>
+                    <th th:if="${loggedUserAuctions == true}">Opcje</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="auction : ${auctionListPage.content}">
+
+                    <td>
+                        <a th:href="@{/auctionList.html(id=${auction.id})}">[[${auction.title}]]</a>
+                    </td>
+                    <td>
+                        <span th:if="${auction.description.isEmpty()}">Brak danych</span>
+                        <span th:unless="${auction.description.isEmpty()}">[[${auction.description}]]</span>
+                    </td>
+                    <td>
+                        [[${auction.category.name}]]
+                    </td>
+                    <td><span th:text="${auction.endDate}"></span></td>
+                    <td><span th:text="${auction.price}"></span></td>
+                    <td><span th:text="${auction.bids.size()}"></span></td>
+
+                    <td th:if="${loggedUserAuctions == true}">
+                        <a class="btn btn-danger" th:href="@{/auctionList.html(did=${auction.id})}">Usuń</a>
+                        <a class="btn btn-success" th:href="@{/auctionForm.html(id=${auction.id})}">Edytuj</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:replace="shared/pagination :: pager('auctionList.html',${auctionListPage})"/>
+        </div>
+    </div>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

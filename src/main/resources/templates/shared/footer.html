@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+    <body>
+        <div id="footer" th:fragment="footer">
+            <footer class="blockquote-footer">
+                © 2018 Platformy programowania
+                    <div sec:authorize="isAuthenticated()">
+                        Twoje role to:
+                        <span th:each="role: ${#authentication.getAuthorities()}">
+                            <span th:text="${role}"/>
+                        </span>
+                    </div>
+            </footer>
+        </div>
+    </body>
+</html>

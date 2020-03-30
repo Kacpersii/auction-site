@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona domowa</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <H1 class="d-flex justify-content-center">Dane aukcji</H1>
+    <img th:src="${auction.path}"/><br><br>
+    <div>
+        <span sec:authorize="isAnonymous()">Cena: <b th:text="${auction.price}"></b><br/></span>
+        <form sec:authorize="hasRole('ROLE_USER')" th:method="POST" th:action="@{/makeBid.html}">
+
+            <input id="id" type="hidden" name="id" th:value="${auction.id}" class="form-control"/>
+
+            <button type="submit" class="btn btn-primary btn-raised">Licytuj</button>
+
+        </form>
+    </div>
+
+    Id: <b th:text="${auction.id}"></b><br/>
+    Sprzedający: <a th:href="@{/userAuctionsList.html(id=${auction.id})}" th:text="${auction.seller.username}"></a><br/>
+    Cena: <b th:text="${auction.price}"></b><br/>
+    Kategoria: <b>[[${auction.category.name}]]</b><br/>
+    Tytuł: <b th:text="${auction.title}"></b><br/>
+    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy')}]]</b><br/>
+    Opis: <b>[[${auction.description}]]</b><br/>
+    Numer telefonu: <b>[[${auction.phone}]]</b><br/>
+
+    <br/>
+
+    <span sec:authorize="isAuthenticated()">
+        <span th:if="${#authentication.getPrincipal().getUsername() == auction.seller.username}">
+            <a class="btn btn-danger" th:href="@{/auctionList.html(did=${auction.id})}">Usuń</a>
+            <a class="btn btn-success" th:href="@{/auctionForm.html(id=${auction.id})}">Edytuj</a>
+        </span>
+    </span>
+
+    <div th:if="${opinions.isEmpty() eq false}">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Data</th>
+                <th>Opis</th>
+                <th sec:authorize="isAuthenticated()">
+                    Opcje
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="opinion : ${opinions}">
+
+                <td>
+                    <span>[[${opinion.evaluative.username}]]</span>
+                </td>
+                <td>
+                    <span>[[${opinion.date}]]</span>
+                </td>
+                <td>
+                    <span>[[${opinion.description}]]</span>
+                </td>
+
+                <td sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getUsername() == opinion.evaluative.username}">
+                    <a class="btn btn-danger" th:href="@{/auctionList.html(did=${auction.id})}">Usuń</a>
+                    <a class="btn btn-success" th:href="@{/auctionForm.html(id=${auction.id})}">Edytuj</a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-success" href="/auctionList.html">Wstecz</a>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

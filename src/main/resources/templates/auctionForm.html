@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Rejestracja</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main">
+            <form th:method="POST" th:object="${auction}" th:action="@{/auctionForm.html}">
+                <fieldset>
+                    <h1>Dodawanie/Edycja</h1>
+
+                    <div class="form-group">
+                        <label for="title" class="bmd-label-floating">Tytuł:</label>
+                        <input id="title" type="text" name="title" th:value="*{title}"
+                               class="form-control" th:classappend="${#fields.hasErrors('title')}?'is-invalid'"
+                               required="true" autofocus="true"/>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('title')}">
+                            <span th:each="err : ${#fields.errors('title')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="bmd-label-floating">Opis:</label>
+                        <input id="description" type="text" th:field="*{description}"
+                               class="form-control" th:classappend="${#fields.hasErrors('description')}?'is-invalid'"
+                               required="true"/>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('description')}">
+                            <p th:each="err : ${#fields.errors('description')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="endDate" class="bmd-label-floating">Data zakończenia aukcji:</label>
+                        <input id="endDate" type="date"  th:field="*{endDate}"
+                               class="form-control" th:classappend="${#fields.hasErrors('endDate')}?'is-invalid'"
+                               required="true"/>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('endDate')}">
+                            <p th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select th:field="*{category.id}" class="form-control"
+                                th:classappend="${#fields.hasErrors('category.id')}?'is-invalid'">
+                            <option value="-1">--wybierz kategorię--</option>
+                            <option th:each="cat : ${categories}"
+                                    th:value="${cat.id}"
+                                    th:text=" ${cat.name}"
+                            />
+                        </select>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('category.id')}">
+                            <p th:each="err : ${#fields.errors('category.id')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="price" class="bmd-label-floating">Cena:</label>
+                    <input id="price" type="number" name="price" th:value="*{price}"
+                           class="form-control" th:classappend="${#fields.hasErrors('price')}?'is-invalid'"
+                           required="true" autofocus="true"/>
+
+                    <div class="error text-danger" th:if="${#fields.hasErrors('price')}">
+                        <span th:each="err : ${#fields.errors('price')}" th:text="${err}"></span>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="bmd-label-floating">Nr telefonu:</label>
+                        <input id="phone" type="number" name="phone" th:value="*{phone}"
+                               class="form-control" th:classappend="${#fields.hasErrors('phone')}?'is-invalid'"
+                               required="true" autofocus="true"/>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('phone')}">
+                            <span th:each="err : ${#fields.errors('phone')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="path" class="bmd-label-floating">Scieżka:</label>
+                        <input id="path" type="text" name="path" th:value="*{path}"
+                               class="form-control" th:classappend="${#fields.hasErrors('path')}?'is-invalid'"
+                               required="true" autofocus="true"/>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('path')}">
+                            <span th:each="err : ${#fields.errors('path')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary btn-raised">Zapisz</button>
+                </fieldset>
+            </form>
+    <span th:text ="${userId}"></span>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

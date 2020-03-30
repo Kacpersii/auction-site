@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap-material-design/4.1.2/dist/css/bootstrap-material-design.css" />
+        <link rel="stylesheet" type="text/css"
+              href="statics/css/main.css" />
+    </div>
+</head>
+<body>
+
+<body class="card-header">
+
+<nav id="header" th:fragment="header(pageName)" class="navbar navbar-expand bg-dark flex-column flex-md-row">
+    <div class="navbar-nav-scroll">
+        <ul class="nav nav-tabs bg-dark">
+
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${pageName eq 'home'}?'active'" th:href="@{/}" >Strona główna</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${pageName eq 'auctionList'}?'active'" th:href="@{/auctionList.html}">Aukcje</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                 <a class="nav-link" th:classappend="${pageName eq 'auctionForm'}?'active'"  th:href="@{/auctionForm.html}">Nowa aukcja</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                 <a class="nav-link" th:classappend="${pageName eq 'userAuctionsList'}?'active'"  th:href="@{/userAuctionsList.html}">Moje aukcje</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link"  th:classappend="${pageName eq 'registration'}?'active'" href="/registrationForm.html">Rejestracja</a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="nav-tabs navbar-nav ml-md-auto bg-dark">
+
+            <label style="color:yellow; margin-top: 20px;" sec:authorize="isAuthenticated()">
+                Witaj <span sec:authentication="name"/>!
+            </label>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
+                <form th:action="@{/logout}" id="logout" method="post" style="display: none;">
+                    <input
+                            type="hidden"
+                            th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}"/>
+                </form>
+            </li>
+
+        <li sec:authorize="isAnonymous()"
+            class="nav-item"
+            th:class="${pageName eq 'logonForm'}? 'active'">
+            <a class="nav-link" th:classappend="${pageName eq 'loginForm'}?'active'" th:href="@{/login}">Zaloguj się</a>
+        </li>
+    </ul>
+
+</nav>
+
+
+
+</body>
+
+
+
+
+
+
+</body>
+</html>
