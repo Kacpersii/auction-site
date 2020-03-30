@@ -12,7 +12,6 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-@NoArgsConstructor
 @Table(name = "opinions")
 public class Opinion {
 
@@ -30,6 +29,7 @@ public class Opinion {
     @JoinColumn(name = "evaluative_id", nullable = false)
     private User evaluative;
 
+    @Column(name="date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
@@ -38,5 +38,9 @@ public class Opinion {
         this.auction = auction;
         this.evaluative = evaluative;
         this.date = date;
+    }
+
+    public Opinion() {
+        this.date = new Date();
     }
 }

@@ -42,7 +42,7 @@ public class AuctionServiceImpl implements AuctionService {
         if(filter.isEmpty()){
             page = auctionRepository.findAll(pageable);
         }else{
-            page = auctionRepository.findAllAuctionsUsingFilter(filter.getTitleLIKE(), filter.getDescriptionLIKE(), pageable);
+            page = auctionRepository.findAllAuctionsUsingFilter(filter.getTitleLIKE(), filter.getDescriptionLIKE(), filter.getCategoryLIKE(), pageable);
         }
 
         return page;
@@ -61,7 +61,7 @@ public class AuctionServiceImpl implements AuctionService {
         if(filter.isEmpty()){
             page = auctionRepository.findByOrderByEndDateAsc(pageable);
         }else{
-            page = auctionRepository.findAllAuctionsUsingFilter(filter.getTitleLIKE(), filter.getDescriptionLIKE(), pageable);
+            page = auctionRepository.findAllAuctionsUsingFilter(filter.getTitleLIKE(), filter.getDescriptionLIKE(), filter.getCategoryLIKE(), pageable);
         }
 
         return page;

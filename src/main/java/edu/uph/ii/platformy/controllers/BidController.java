@@ -41,7 +41,7 @@ public class BidController {
         Auction auction = auctionService.getAuction(id);
         Bid bid = new Bid();
         bid.setAuction(auction);
-        bid.setAmount(auction.getPrice());
+        bid.setAmount(auction.getPrice() + 1);
 
         model.addAttribute("auction", auction);
         model.addAttribute("bid", bid);

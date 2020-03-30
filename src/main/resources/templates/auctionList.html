@@ -22,15 +22,21 @@
                     <div class="error text-danger" th:if="${#fields.hasErrors('title')}">
                         <p th:each="err : ${#fields.errors('title')}" th:text="${err}"></p>
                     </div>
-
                 </div>
+
                 <div class="form-group col-md-6">
                     <input th:field="*{description}" placeholder="Opis" class="form-control"
                            th:classappend="${#fields.hasErrors('description')}?'is-invalid'"/>
                     <div class="error text-danger" th:if="${#fields.hasErrors('description')}">
                         <p th:each="err : ${#fields.errors('description')}" th:text="${err}"></p>
                     </div>
+                </div>
 
+                <div class="form-group col-md-3">
+                    <span th:each="cat : ${categs}">
+                        <input type="radio" th:field="*{category}" th:value="${cat.name}" />
+                        <label th:for="${#ids.prev('category')}" th:text="${cat.name}"></label><br>
+                    </span>
                 </div>
 
             </div>
@@ -94,7 +100,7 @@
                     <td>
                         [[${auction.category.name}]]
                     </td>
-                    <td><span th:text="${#dates.format(auction.endDate, 'dd-MM-yyyy')}"></span></td>
+                    <td><span th:text="${#dates.format(auction.endDate, 'dd-MM-yyyy HH:mm:ss')}"></span></td>
                     <td><span th:text="${auction.price}"></span></td>
 
                     <td sec:authorize="hasRole('ROLE_ADMIN')">

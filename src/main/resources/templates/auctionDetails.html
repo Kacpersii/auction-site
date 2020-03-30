@@ -26,7 +26,7 @@
     Cena: <b th:text="${auction.price}"></b><br/>
     Kategoria: <b>[[${auction.category.name}]]</b><br/>
     Tytuł: <b th:text="${auction.title}"></b><br/>
-    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy')}]]</b><br/>
+    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy HH:mm:ss')}]]</b><br/>
     Opis: <b>[[${auction.description}]]</b><br/>
     Numer telefonu: <b>[[${auction.phone}]]</b><br/>
 
@@ -38,6 +38,32 @@
             <a class="btn btn-success" th:href="@{/auctionForm.html(id=${auction.id})}">Edytuj</a>
         </span>
     </span>
+
+
+    <h4 th:if="${opinions.isEmpty() eq true}" class="d-flex justify-content-center">Brak opini na temat produktu</h4>
+
+    <div th:if="${opinions.isEmpty() eq false}">
+        <h4 class="d-flex justify-content-center">Opinie na temat produktu</h4><br>
+    </div>
+
+    <form sec:authorize="hasRole('ROLE_USER')" th:method="POST" th:object="${opinion}" th:action="@{/processOpinion.html}">
+
+        <input id="auction" type="hidden" name="auction" th:value="*{auction.id}" class="form-control"/>
+
+        <div class="form-group col-sm-12">
+            <label for="description" class="bmd-label-floating">Opinia:</label>
+            <input id="description" type="text" name="description" th:value="*{description}"
+                   class="form-control" th:classappend="${#fields.hasErrors('description')}?'is-invalid'"
+                   required="true" autofocus="true"/>
+
+            <div class="error text-danger" th:if="${#fields.hasErrors('description')}">
+                <span th:each="err : ${#fields.errors('description')}" th:text="${err}"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-raised">Dodaj opinię</button>
+
+    </form>
 
     <div th:if="${opinions.isEmpty() eq false}">
 
@@ -60,15 +86,15 @@
                     <span>[[${opinion.evaluative.username}]]</span>
                 </td>
                 <td>
-                    <span>[[${opinion.date}]]</span>
+                    <span th:text="${#dates.format(opinion.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
                 </td>
                 <td>
                     <span>[[${opinion.description}]]</span>
                 </td>
 
                 <td sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getUsername() == opinion.evaluative.username}">
-                    <a class="btn btn-danger" th:href="@{/auctionList.html(did=${auction.id})}">Usuń</a>
-                    <a class="btn btn-success" th:href="@{/auctionForm.html(id=${auction.id})}">Edytuj</a>
+                    <a class="btn btn-danger" th:href="@{/auctionList.html(doid=${opinion.id})}">Usuń</a>
+                    <a class="btn btn-success" th:href="@{/auctionList.html(id=${auction.id}, oid=${opinion.id})}">Edytuj</a>
                 </td>
 
             </tr>
@@ -78,7 +104,7 @@
     </div>
 
     <a class="btn btn-success" href="/auctionList.html">Wstecz</a>
-</div>
+</h4>
 <div th:replace="shared/footer :: footer"></div>
 </body>
 </html>

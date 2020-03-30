@@ -22,16 +22,16 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
     Page<Auction> findAllAuctionsUsingNamedQuery(String phrase, Pageable pageable);
 
     @Query("SELECT a FROM Auction a WHERE " +
-            "(" +
-            ":title is null OR :title = '' OR "+
-            "upper(a.title) LIKE upper(:title)" +
-            ") " +
+            "( :title is null OR :title = '' OR "+
+            "upper(a.title) LIKE upper(:title)) " +
             "AND " +
-            "(" +
-            ":description is null OR :description = '' OR "+
-            "upper(a.description) LIKE upper(:description)" +
-            ") ORDER BY endDate ASC")
-    Page<Auction> findAllAuctionsUsingFilter(@Param("title") String title, @Param("description") String description, Pageable pageable);
+            "(:description is null OR :description = '' OR "+
+            "upper(a.description) LIKE upper(:description))" +
+            "AND " +
+            "(:category is null OR :category = '' OR "+
+            "upper(a.category.name) LIKE upper(:category)) " +
+            "ORDER BY endDate ASC")
+    Page<Auction> findAllAuctionsUsingFilter(@Param("title") String title, @Param("description") String description, @Param("category") String category, Pageable pageable);
 
 }
 

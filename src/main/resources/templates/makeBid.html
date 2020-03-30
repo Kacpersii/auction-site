@@ -35,7 +35,7 @@
     Id: <b th:text="${auction.id}"></b><br/>
     Tytuł: <b th:text="${auction.title}"></b><br/>
     Kategoria: <b>[[${auction.category.name}]]</b><br/>
-    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy')}]]</b><br/><br>
+    Data zakończenia : <b>[[${#dates.format(auction.endDate, 'dd-MM-yyyy HH:mm:ss')}]]</b><br/><br>
 
     <h2>Historia aukcji</h2>
     <div th:if="${bidsList.isEmpty()}">

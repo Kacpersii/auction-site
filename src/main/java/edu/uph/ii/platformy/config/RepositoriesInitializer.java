@@ -97,7 +97,7 @@ public class RepositoriesInitializer {
                 Bid bid1 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1550, new Date(120, 02, 30, 11, 47, 06));
                 Bid bid2 = new Bid(userRepository.getOne((long) 2), auctionRepository.getOne((long) 1), 1600, new Date(120, 02, 30, 11, 51, 55));
                 Bid bid3 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1650, new Date(120, 02, 30, 12, 06, 01));
-                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 02, 3, 12, 11, 45));
+                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 02, 30, 12, 11, 45));
 
                 bidRepository.saveAndFlush(bid1);
                 bidRepository.saveAndFlush(bid2);
