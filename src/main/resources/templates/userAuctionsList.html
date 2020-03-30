@@ -33,13 +33,12 @@
                     <th>Kategoria</th>
                     <th>Data zakończenia</th>
                     <th>Cena</th>
-                    <th th:if="${loggedUserAuctions == true}">Ilość ofert</th>
                     <th th:if="${loggedUserAuctions == true}">Opcje</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="auction : ${auctionListPage.content}">
+                <tr th:each="auction, iter : ${auctionListPage.content}">
 
                     <td>
                         <a th:href="@{/auctionList.html(id=${auction.id})}">[[${auction.title}]]</a>
@@ -53,7 +52,6 @@
                     </td>
                     <td><span th:text="${auction.endDate}"></span></td>
                     <td><span th:text="${auction.price}"></span></td>
-                    <td><span th:text="${auction.bids.size()}"></span></td>
 
                     <td th:if="${loggedUserAuctions == true}">
                         <a class="btn btn-danger" th:href="@{/auctionList.html(did=${auction.id})}">Usuń</a>
