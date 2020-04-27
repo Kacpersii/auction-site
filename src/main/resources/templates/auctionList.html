@@ -120,7 +120,7 @@
         <br>
         <br>
         <br>
-        <a th:href="@{/auctionForm.html}">Dodaj Nowy</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/auctionForm.html}">Dodaj Nowy</a>
 
 
     </div>

@@ -73,14 +73,14 @@ public class RepositoriesInitializer {
                 categoryRepository.saveAndFlush(category3);
                 categoryRepository.saveAndFlush(category4);
 
-                Auction auction1 = new Auction("Huawei lepsze", "HUAWEI P30 Lite został wyposażony w aż 3 tylnie obiektywy wspomagane przez sztuczną inteligencję AI. ","1.jpg", 1651,555555555, new Date(120, 02, 31, 12, 01, 01), category1, user1);
-                Auction auction2 = new Auction("Laptop HP Elitebook", "Laptop HP Elitebook x360 830 G6 i5-8265U/Touch13,3FHD/8GB/256SSD/W10P","2.jpg",2400,222222222,  new Date(120, 02, 31, 13, 01, 01), category1, user3);
-                Auction auction3 = new Auction("BMW X6M 600KM", "Rok produkcji: 05/2015 asdasasd","3.jpg",125000,999999999,  new Date(120, 02, 31, 17, 01, 01), category2, user1);
-                Auction auction4 = new Auction("Skuter", "Bardzo fajny skuter. Polecam!","4.jpg", 4000,888888888, new Date(120, 02, 31, 15, 21, 01), category2, user3);
-                Auction auction5 = new Auction("Książka", "Jakaś książka nie wiem jaka znalazłem na strychu chyba stara","5.jpg", 15,777777777, new Date(120, 02, 31, 13, 01, 01), category3, user2);
-                Auction auction6 = new Auction("Pan Tadeusz", "ksiazka nie wudka hehe","6.jpg", 16.50,666666666, new Date(120, 03, 01, 17, 01, 01), category3, user2);
-                Auction auction7 = new Auction("Spalding TF-250", "Piłka do kosza Spalding porządna prawie jak nowa używana tylko raz","7.jpg", 69.99,333333333, new Date(120, 03, 02, 18, 01, 01), category4, user1);
-                Auction auction8 = new Auction("Adidas Predator r. 44", "Koreczki adidas predator rozmiar 44 mało co używane. Sprzedaję bo na mnie są za duże","8.jpg", 330,444444444, new Date(120, 03, 02, 19, 01, 01), category4, user3);
+                Auction auction1 = new Auction("Huawei lepsze", "HUAWEI P30 Lite został wyposażony w aż 3 tylnie obiektywy wspomagane przez sztuczną inteligencję AI. ","1.jpg", 1651,555555555, new Date(120, 03, 29, 12, 01, 01), category1, user1);
+                Auction auction2 = new Auction("Laptop HP Elitebook", "Laptop HP Elitebook x360 830 G6 i5-8265U/Touch13,3FHD/8GB/256SSD/W10P","2.jpg",2400,222222222,  new Date(120, 03, 29, 13, 01, 01), category1, user3);
+                Auction auction3 = new Auction("BMW X6M 600KM", "Rok produkcji: 05/2015 asdasasd","3.jpg",125000,999999999,  new Date(120, 03, 30, 17, 01, 01), category2, user1);
+                Auction auction4 = new Auction("Skuter", "Bardzo fajny skuter. Polecam!","4.jpg", 4000,888888888, new Date(120, 03, 30, 15, 21, 01), category2, user3);
+                Auction auction5 = new Auction("Książka", "Jakaś książka nie wiem jaka znalazłem na strychu chyba stara","5.jpg", 15,777777777, new Date(120, 03, 30, 13, 01, 01), category3, user2);
+                Auction auction6 = new Auction("Pan Tadeusz", "ksiazka nie wudka hehe","6.jpg", 16.50,666666666, new Date(120, 04, 01, 17, 01, 01), category3, user2);
+                Auction auction7 = new Auction("Spalding TF-250", "Piłka do kosza Spalding porządna prawie jak nowa używana tylko raz","7.jpg", 69.99,333333333, new Date(120, 04, 03, 18, 01, 01), category4, user1);
+                Auction auction8 = new Auction("Adidas Predator r. 44", "Koreczki adidas predator rozmiar 44 mało co używane. Sprzedaję bo na mnie są za duże","8.jpg", 330,444444444, new Date(120, 04, 05, 19, 01, 01), category4, user3);
 
                 System.out.println(auction4.getEndDate());
 
@@ -99,10 +99,10 @@ public class RepositoriesInitializer {
             }
 
             if (bidRepository.findAll().isEmpty()) {
-                Bid bid1 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1550, new Date(120, 02, 30, 10, 47, 06));
-                Bid bid2 = new Bid(userRepository.getOne((long) 2), auctionRepository.getOne((long) 1), 1600, new Date(120, 02, 30, 10, 51, 55));
-                Bid bid3 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1650, new Date(120, 02, 30, 11, 06, 01));
-                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 02, 30, 11, 11, 45));
+                Bid bid1 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1550, new Date(120, 03, 20, 10, 47, 06));
+                Bid bid2 = new Bid(userRepository.getOne((long) 2), auctionRepository.getOne((long) 1), 1600, new Date(120, 03, 20, 10, 51, 55));
+                Bid bid3 = new Bid(userRepository.getOne((long) 1), auctionRepository.getOne((long) 1), 1650, new Date(120, 03, 20, 11, 06, 01));
+                Bid bid4 = new Bid(userRepository.getOne((long) 3), auctionRepository.getOne((long) 1), 1651, new Date(120, 03, 20, 11, 11, 45));
 
                 bidRepository.saveAndFlush(bid1);
                 bidRepository.saveAndFlush(bid2);
@@ -111,7 +111,7 @@ public class RepositoriesInitializer {
             }
 
             if (opinionRepository.findAll().isEmpty()) {
-                Opinion opinion1 = new Opinion("Nie polecam tego, bardzo słaba jakość", auctionRepository.getOne((long) 1), userRepository.getOne((long) 1), new Date(120, 02, 29, 13, 47, 06));
+                Opinion opinion1 = new Opinion("Nie polecam tego, bardzo słaba jakość", auctionRepository.getOne((long) 1), userRepository.getOne((long) 1), new Date(120, 03, 24, 13, 47, 06));
 
                 opinionRepository.saveAndFlush(opinion1);
             }

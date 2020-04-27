@@ -22,7 +22,7 @@
     </div>
 
     Id: <b th:text="${auction.id}"></b><br/>
-    Sprzedający: <a th:href="@{/userAuctionsList.html(id=${auction.id})}" th:text="${auction.seller.username}"></a><br/>
+    Sprzedający: <a th:href="@{/userAuctionsList.html(id=${auction.seller.id})}" th:text="${auction.seller.username}"></a><br/>
     Cena: <b th:text="${auction.price}"></b><br/>
     Kategoria: <b>[[${auction.category.name}]]</b><br/>
     Tytuł: <b th:text="${auction.title}"></b><br/>
