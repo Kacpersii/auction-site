@@ -41,6 +41,23 @@ public class MessageController {
     @Autowired
     OpinionService opinionService;
 
+    @RequestMapping(value="/messages.html", method = RequestMethod.GET)
+    public String showMessages(Model model, Principal principal){
+        User user = userService.getUser(principal.getName());
+        List<Message> receivedMessages = messageService.getAllReceiverMessages(user);
+        List<Message> sendedMessages = messageService.getAllSenderMessages(user);
+
+        Message newMessage = new Message();
+        newMessage.setAuctionM(auctionService.getAuction((long) 1));
+        newMessage.setReceiver(userService.getUser((long) 1));
+
+        model.addAttribute("receivedMessages", receivedMessages);
+        model.addAttribute("sendedMessages", sendedMessages);
+        model.addAttribute("replyMessage", newMessage);
+
+        return "messages";
+    }
+
     @RequestMapping(value="/processMessage.html", method = RequestMethod.POST)
     public String processMessageForm(@Valid @ModelAttribute("message") Message message, Model model, BindingResult errors, Principal principal) {
         if (errors.hasErrors()) {
@@ -71,15 +88,22 @@ public class MessageController {
         return "auctionDetails";
     }
 
-    @RequestMapping(value="/messages.html", method = RequestMethod.GET)
-    public String showMessages(Model model, Principal principal){
-        User user = userService.getUser(principal.getName());
-        List<Message> receivedMessages = messageService.getAllReceiverMessages(user);
-        List<Message> sendedMessages = messageService.getAllSenderMessages(user);
+    @RequestMapping(value="/replyMessage.html", method = RequestMethod.POST)
+    public String processReplyMessage(@Valid @ModelAttribute("message") Message message, Model model, BindingResult errors, Principal principal){
+        User sender = userService.getUser(principal.getName());
+        message.setSender(sender);
+        messageService.saveMessage(message);
 
+        List<Message> receivedMessages = messageService.getAllReceiverMessages(sender);
+        List<Message> sendedMessages = messageService.getAllSenderMessages(sender);
+
+        Message newMessage = new Message();
+        newMessage.setAuctionM(auctionService.getAuction((long) 1));
+        newMessage.setReceiver(userService.getUser((long) 1));
 
         model.addAttribute("receivedMessages", receivedMessages);
         model.addAttribute("sendedMessages", sendedMessages);
+        model.addAttribute("replyMessage", newMessage);
 
         return "messages";
     }

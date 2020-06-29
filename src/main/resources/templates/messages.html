@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <div th:replace="shared/header :: header-css"/>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Strona domowa</title>
 </head>
 <body class="card">
@@ -13,6 +13,34 @@
     <h4  th:if="${receivedMessages.isEmpty()}">Brak orzymanych wiadomości</h4>
     <div th:if="${receivedMessages.isEmpty() eq false}">
 
+        <div id="replyForm">
+
+            <form th:method="POST" th:object="${replyMessage}" th:action="@{/replyMessage.html}">
+
+                <h4 id="askMe">Odpowiedz:</h4>
+
+                <div class="form-group col-sm-12">
+                    <label for="content" class="bmd-label-floating">Wiadomość:</label>
+                    <input id="content" type="text" name="content" th:value="*{content}"
+                           class="form-control" th:classappend="${#fields.hasErrors('content')}?'is-invalid'"
+                           required="true" autofocus="true"/>
+
+                    <div class="error text-danger" th:if="${#fields.hasErrors('content')}">
+                        <span th:each="err : ${#fields.errors('content')}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <input id="auctionMForm" type="hidden" name="auctionM" th:value="*{auctionM.id}" class="form-control"/>
+
+                <input id="receiverForm" type="hidden" name="receiver" th:value="*{receiver.id}" class="form-control"/>
+
+                <button type="submit" class="btn btn-primary btn-raised">Wyślij wiadomość</button>
+
+            </form>
+
+        </div>
+
+
         <h3>Otrzymane wiadomosci</h3>
         <table class="table table-striped">
             <thead>
@@ -21,6 +49,7 @@
                 <th>Data</th>
                 <th>Aukcja</th>
                 <th>Wiadomość</th>
+                <th>Opcje</th>
 
             </tr>
             </thead>
@@ -29,6 +58,8 @@
 
                 <td>
                     <span>[[${message.sender.username}]]</span>
+                    <span hidden class="auctionM">[[${message.auctionM.id}]]</span>
+                    <span hidden class="receiver">[[${message.sender.id}]]</span>
                 </td>
                 <td>
                     <span th:text="${#dates.format(message.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
@@ -38,6 +69,13 @@
                 </td>
                 <td>
                     <span>[[${message.content}]]</span>
+                </td>
+                <td>
+                    <span class="btn btn-success reply">
+                        Odpowiedz
+                        <p hidden class="auctionM">[[${message.auctionM.id}]]</p>
+                        <p hidden class="receiver">[[${message.sender.id}]]</p>
+                    </span>
                 </td>
 
             </tr>
@@ -85,4 +123,24 @@
 </div>
 <div th:replace="shared/footer :: footer"></div>
 </body>
+<script>
+    $(document).ready(function(){
+        $("#replyForm").hide();
+        var $isHidden = true;
+
+        $(".reply").click(function(){
+            if($isHidden == true){
+                $isHidden = false;
+                $("#replyForm").show();
+                var auc = $(this).find(".auctionM").text();
+                var rec = $(this).find(".receiver").text();
+                $("#auctionMForm").val(auc);
+                $("#receiverForm").val(rec);
+            }else if($isHidden == false){
+                $isHidden = true;
+                $("#replyForm").hide();
+            }
+        });
+    });
+</script>
 </html>

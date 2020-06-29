@@ -30,7 +30,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
             "AND " +
             "(:category is null OR :category = '' OR "+
             "upper(a.category.name) LIKE upper(:category)) " +
-            "ORDER BY endDate ASC")
+            "ORDER BY :endDate ASC")
     Page<Auction> findAllAuctionsUsingFilter(@Param("title") String title, @Param("description") String description, @Param("category") String category, Pageable pageable);
 
 }
